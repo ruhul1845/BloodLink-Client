@@ -1,0 +1,56 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useAuth } from "@/context/AuthContext";
+import Logo from "./Logo";
+import { initials } from "@/lib/data";
+import ThemeToggle from "./ThemeToggle";
+import { MdLogout } from "react-icons/md";
+
+export default function DashboardLayout({ children }) {
+  const { user, loading, logout } = useAuth();
+  const router = useRouter();
+  const pathname = usePathname();
+  useEffect(() => {
+    if (!loading && !user) router.push("/login");
+  }, [loading, user, router]);
+  if (loading || !user) return <main className="p-10 font-bold">Loading...</main>;
+  const links = [
+    ["/dashboard", "Dashboard", true],
+    ["/dashboard/profile", "Profile", true],
+    ["/dashboard/my-donation-requests", "My Requests", user.role === "donor" || user.role === "admin"],
+    ["/dashboard/create-donation-request", "Create Request", user.role === "donor" || user.role === "admin"],
+    ["/dashboard/all-users", "All Users", user.role === "admin"],
+    ["/dashboard/all-blood-donation-request", "All Blood Requests", user.role === "admin" || user.role === "volunteer"],
+    ["/funding", "Funding", true],
+  ].filter(([, , show]) => show);
+  return (
+    <div className="min-h-screen bg-[#F7F8FB] lg:grid lg:grid-cols-[280px_1fr]">
+      <aside className="dashboard-sidebar flex flex-col border-r border-[#E8E4DA] bg-[#FFFDF7] p-6 text-[#101828] lg:sticky lg:top-0 lg:h-screen lg:min-h-screen">
+        <div className="flex items-center justify-between gap-4"><Link href="/"><Logo /></Link><ThemeToggle /></div>
+        <nav className="mt-10 grid gap-2">
+          {links.map(([href, label]) => (
+            <Link key={href} href={href} className={`rounded-xl px-5 py-3 font-bold ${pathname === href ? "bg-[#E02B22] text-white" : "text-[#475467] hover:bg-[#F2F0E9]"}`}>{label}</Link>
+          ))}
+        </nav>
+        <div className="dashboard-user-card mt-auto rounded-2xl border border-[#E8E4DA] bg-white p-4">
+          <div className="flex items-center gap-3">
+            <span className="grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-full bg-[#FFECEC] font-black text-[#E02B22]">
+              {user.avatar ? <img src={user.avatar} alt={user.name} className="h-full w-full object-cover" /> : initials(user.name)}
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="truncate font-black">{user.name}</p>
+              <p className="truncate text-sm text-[#667085]">{user.email}</p>
+            </div>
+            <button onClick={logout} className="dashboard-logout grid h-10 w-10 shrink-0 place-items-center rounded-xl text-[#667085] hover:bg-[#FFF1F0] hover:text-[#D92D20]" aria-label="Logout" title="Logout">
+              <MdLogout size={23} aria-hidden="true" />
+            </button>
+          </div>
+        </div>
+      </aside>
+      <main className="p-5 md:p-10">{children}</main>
+    </div>
+  );
+}
