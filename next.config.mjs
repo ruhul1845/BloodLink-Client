@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Keep production builds away from the active development cache.
-  distDir: process.env.NODE_ENV === "production" ? ".next-build" : ".next",
+  // Vercel's Next.js builder expects the standard `.next` output directory.
+  // Local production checks use a separate directory so they cannot corrupt `next dev`.
+  distDir: process.env.VERCEL ? ".next" : process.env.NODE_ENV === "production" ? ".next-build" : ".next",
 };
 
 export default nextConfig;
