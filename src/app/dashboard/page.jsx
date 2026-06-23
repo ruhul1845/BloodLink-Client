@@ -8,6 +8,48 @@ import RequestTable from "@/components/RequestTable";
 import ApexRequestChart from "@/components/ApexRequestChart";
 import { MdAttachMoney, MdBloodtype, MdPeopleAlt } from "react-icons/md";
 
+function buildRequestTrend(requests, range) {
+  const now = new Date();
+  const dateKey = (date) => date.toISOString().slice(0, 10);
+  const monthKey = (date) => date.toISOString().slice(0, 7);
+  const weekStart = (date) => {
+    const start = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
+    start.setUTCDate(start.getUTCDate() - ((start.getUTCDay() + 6) % 7));
+    return start;
+  };
+  const buckets = [];
+
+  if (range === "monthly") {
+    for (let offset = 11; offset >= 0; offset -= 1) {
+      const date = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - offset, 1));
+      buckets.push({ key: monthKey(date), label: date.toLocaleDateString("en-US", { month: "short", year: "2-digit", timeZone: "UTC" }), requests: 0 });
+    }
+  } else if (range === "weekly") {
+    const currentWeek = weekStart(now);
+    for (let offset = 7; offset >= 0; offset -= 1) {
+      const date = new Date(currentWeek);
+      date.setUTCDate(date.getUTCDate() - offset * 7);
+      buckets.push({ key: dateKey(date), label: date.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" }), requests: 0 });
+    }
+  } else {
+    for (let offset = 6; offset >= 0; offset -= 1) {
+      const date = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - offset));
+      buckets.push({ key: dateKey(date), label: date.toLocaleDateString("en-US", { weekday: "short", day: "numeric", timeZone: "UTC" }), requests: 0 });
+    }
+  }
+
+  const bucketsByKey = new Map(buckets.map((bucket) => [bucket.key, bucket]));
+  requests.forEach((request) => {
+    const createdAt = new Date(request.createdAt || request.donationDate);
+    if (Number.isNaN(createdAt.getTime())) return;
+    const key = range === "monthly" ? monthKey(createdAt) : range === "weekly" ? dateKey(weekStart(createdAt)) : dateKey(createdAt);
+    const bucket = bucketsByKey.get(key);
+    if (bucket) bucket.requests += 1;
+  });
+
+  return buckets.map(({ label, requests: count }) => ({ label, requests: count }));
+}
+
 export default function DashboardHome() {
   const { user } = useAuth();
   const [rows, setRows] = useState([]);
@@ -15,8 +57,21 @@ export default function DashboardHome() {
   const [range, setRange] = useState("daily");
   const load = useCallback(async () => {
     if (!user) return;
-    if (user.role === "donor") setRows((await api("/api/requests/my")).slice(0, 3));
-    else setStats(await api(`/api/stats?range=${range}`));
+    if (user.role === "donor") {
+      setRows((await api("/api/requests/my")).slice(0, 3));
+      return;
+    }
+
+    const nextStats = await api(`/api/stats?range=${range}`);
+    if (!Array.isArray(nextStats.requestTrend) || !nextStats.requestTrend.length) {
+      try {
+        const requests = await api("/api/requests/all");
+        nextStats.requestTrend = buildRequestTrend(requests, range);
+      } catch {
+        nextStats.requestTrend = buildRequestTrend([], range);
+      }
+    }
+    setStats(nextStats);
   }, [user, range]);
   useEffect(() => {
     load();

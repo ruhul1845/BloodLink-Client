@@ -61,15 +61,19 @@ export default function FundingPage() {
   const [funds, setFunds] = useState([]);
   const [show, setShow] = useState(false);
   const { pageItems, page, setPage, totalPages } = usePagination(funds, 10);
+  const canSeeAllFunds = user?.role === "admin" || user?.role === "volunteer";
   const load = useCallback(async () => {
-    setFunds(await api("/api/funds"));
-  }, []);
+    if (!user) return;
+    const records = await api("/api/funds");
+    setFunds(canSeeAllFunds
+      ? records
+      : records.filter((fund) => fund.userId === user._id || fund.email === user.email));
+  }, [user, canSeeAllFunds]);
   useEffect(() => {
     if (!loading && !user) router.push("/login");
     if (user) load();
   }, [user, loading, router, load]);
   if (!user) return <main className="p-10 font-bold">Loading...</main>;
-  const canSeeAllFunds = user.role === "admin" || user.role === "volunteer";
   return (
     <>
       <Navbar />
@@ -86,11 +90,12 @@ export default function FundingPage() {
         <h2 className="mt-8 text-2xl font-black">{canSeeAllFunds ? "All Funding Records" : "My Funding History"}</h2>
         <div className="table-wrap mt-4">
           <table>
-            <thead><tr><th>Name</th><th>Amount</th><th>Funding Date</th></tr></thead>
+            <thead><tr><th>Name</th>{canSeeAllFunds && <th>Email</th>}<th>Amount</th><th>Funding Date</th></tr></thead>
             <tbody>
               {pageItems.map((fund) => (
                 <tr key={fund._id}>
                   <td className="font-black">{fund.name}</td>
+                  {canSeeAllFunds && <td>{fund.email || "—"}</td>}
                   <td>${fund.amount}</td>
                   <td>{new Date(fund.createdAt).toLocaleDateString()}</td>
                 </tr>
