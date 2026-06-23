@@ -39,6 +39,7 @@ export default function DashboardLayout({ children }) {
         <div className="dashboard-brand-row">
           <Logo />
           <Link href="/" className="dashboard-home-link" aria-label="Go to homepage" title="Go to homepage"><MdHome aria-hidden="true" /></Link>
+          <ThemeToggle />
         </div>
         <nav className="mt-10 grid gap-2">
           {links.map(([href, label]) => (
@@ -62,7 +63,6 @@ export default function DashboardLayout({ children }) {
       </aside>
       <main className="p-5 md:p-10">
         <div className="dashboard-topbar" aria-label="Account type and status">
-          <ThemeToggle />
           <span className={`account-tag ${user.status === "blocked" ? "account-tag-blocked" : `account-tag-${user.role}`}`}>{accountLabel}</span>
         </div>
         {children}

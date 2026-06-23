@@ -1204,13 +1204,36 @@ tr:last-child td {
 .dashboard-brand-row {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 6px;
+}
+
+.dashboard-brand-row > div:first-child {
+  gap: 8px;
+}
+
+.dashboard-brand-row > div:first-child > span:first-child {
+  width: 36px;
+  height: 36px;
+}
+
+.dashboard-brand-row .brand-name {
+  font-size: 21px;
+}
+
+.dashboard-brand-row .theme-toggle {
+  width: 34px;
+  height: 34px;
+}
+
+.dashboard-brand-row .theme-toggle svg {
+  width: 19px;
+  height: 19px;
 }
 
 .dashboard-home-link {
   display: grid;
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   flex: 0 0 auto;
   place-items: center;
   color: #667085;
