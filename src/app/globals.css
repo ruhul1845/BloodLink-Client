@@ -1195,9 +1195,43 @@ tr:last-child td {
 .dashboard-topbar {
   display: flex;
   min-height: 32px;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-end;
+  gap: 10px;
   margin-bottom: 8px;
+}
+
+.dashboard-brand-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dashboard-home-link {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  place-items: center;
+  color: #667085;
+}
+
+.dashboard-home-link svg {
+  width: 23px;
+  height: 23px;
+}
+
+.dashboard-home-link:hover {
+  color: #e02b22;
+  transform: translateY(-1px);
+}
+
+.dark .dashboard-home-link {
+  color: #cbd5e1;
+}
+
+.dark .dashboard-home-link:hover {
+  color: #f87171;
 }
 
 .account-tag {

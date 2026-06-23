@@ -7,7 +7,7 @@ import { useAuth } from "@/context/AuthContext";
 import Logo from "./Logo";
 import { initials } from "@/lib/data";
 import ThemeToggle from "./ThemeToggle";
-import { MdLogout } from "react-icons/md";
+import { MdHome, MdLogout } from "react-icons/md";
 
 export default function DashboardLayout({ children }) {
   const { user, loading, logout } = useAuth();
@@ -36,7 +36,10 @@ export default function DashboardLayout({ children }) {
   return (
     <div className="min-h-screen bg-[#F7F8FB] lg:grid lg:grid-cols-[280px_1fr]">
       <aside className="dashboard-sidebar flex flex-col border-r border-[#E8E4DA] bg-[#FFFDF7] p-6 text-[#101828] lg:sticky lg:top-0 lg:h-screen lg:min-h-screen">
-        <div className="flex items-center justify-between gap-4"><Link href="/"><Logo /></Link><ThemeToggle /></div>
+        <div className="dashboard-brand-row">
+          <Logo />
+          <Link href="/" className="dashboard-home-link" aria-label="Go to homepage" title="Go to homepage"><MdHome aria-hidden="true" /></Link>
+        </div>
         <nav className="mt-10 grid gap-2">
           {links.map(([href, label]) => (
             <Link key={href} href={href} className={`rounded-xl px-5 py-3 font-bold ${pathname === href ? "bg-[#E02B22] text-white" : "text-[#475467] hover:bg-[#F2F0E9]"}`}>{label}</Link>
@@ -59,6 +62,7 @@ export default function DashboardLayout({ children }) {
       </aside>
       <main className="p-5 md:p-10">
         <div className="dashboard-topbar" aria-label="Account type and status">
+          <ThemeToggle />
           <span className={`account-tag ${user.status === "blocked" ? "account-tag-blocked" : `account-tag-${user.role}`}`}>{accountLabel}</span>
         </div>
         {children}
