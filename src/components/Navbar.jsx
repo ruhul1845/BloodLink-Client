@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import Logo from "./Logo";
@@ -10,15 +11,20 @@ import { MdClose, MdMenu } from "react-icons/md";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const active = (href) => href === "/" ? pathname === "/" : pathname.startsWith(href);
+  const desktopLink = (href) => active(href) ? "text-[#E02B22]" : "hover:text-[#E02B22]";
+  const mobileLink = (href) => `rounded-lg px-3 py-3 ${active(href) ? "text-[#E02B22]" : ""}`;
   return (
     <header className="sticky top-0 z-30 border-b border-[#EEF1F5] bg-white/95 backdrop-blur">
       <nav className="container-pad flex h-20 items-center justify-between gap-4">
         <Link href="/"><Logo /></Link>
         <div className="hidden items-center gap-8 font-bold text-[#667085] md:flex">
-          <Link href="/donation-requests" className="hover:text-[#E02B22]">Donation Requests</Link>
-          {user && <Link href="/funding" className="hover:text-[#E02B22]">Funding</Link>}
+          <Link href="/" className={desktopLink("/")}>Home</Link>
+          <Link href="/donation-requests" className={desktopLink("/donation-requests")}>Donation Requests</Link>
+          {user && <Link href="/funding" className={desktopLink("/funding")}>Funding</Link>}
         </div>
         <div className="flex items-center gap-2 sm:gap-3">
           <ThemeToggle />
@@ -36,7 +42,7 @@ export default function Navbar() {
           </div>
         ) : (
           <div className="hidden items-center gap-3 md:flex">
-            <Link href="/login" className="font-bold text-[#667085] hover:text-[#E02B22]">Login</Link>
+            <Link href="/login" className={`font-bold ${active("/login") ? "text-[#E02B22]" : "text-[#667085] hover:text-[#E02B22]"}`}>Login</Link>
           </div>
         )}
           <button type="button" className="grid h-11 w-11 place-items-center rounded-xl text-[#344054] md:hidden" onClick={() => setMobileOpen((current) => !current)} aria-label="Toggle navigation" aria-expanded={mobileOpen}>
@@ -47,16 +53,17 @@ export default function Navbar() {
       {mobileOpen && (
         <div className="border-t border-[#EEF1F5] bg-white md:hidden">
           <div className="container-pad grid gap-1 py-4 font-bold text-[#475467]">
-            <Link href="/donation-requests" className="rounded-lg px-3 py-3" onClick={() => setMobileOpen(false)}>Donation Requests</Link>
+            <Link href="/" className={mobileLink("/")} onClick={() => setMobileOpen(false)}>Home</Link>
+            <Link href="/donation-requests" className={mobileLink("/donation-requests")} onClick={() => setMobileOpen(false)}>Donation Requests</Link>
             {user ? (
               <>
-                <Link href="/funding" className="rounded-lg px-3 py-3" onClick={() => setMobileOpen(false)}>Funding</Link>
+                <Link href="/funding" className={mobileLink("/funding")} onClick={() => setMobileOpen(false)}>Funding</Link>
                 <Link href="/dashboard" className="rounded-lg px-3 py-3" onClick={() => setMobileOpen(false)}>Dashboard</Link>
                 <button type="button" onClick={logout} className="px-3 py-3 text-left text-[#D92D20]">Logout</button>
               </>
             ) : (
               <>
-                <Link href="/login" className="rounded-lg px-3 py-3" onClick={() => setMobileOpen(false)}>Login</Link>
+                <Link href="/login" className={mobileLink("/login")} onClick={() => setMobileOpen(false)}>Login</Link>
               </>
             )}
           </div>

@@ -29,7 +29,7 @@ BloodLink makes blood donation coordination faster and easier. Users can find co
 - Personal profile viewing and editing with a protected email field
 - Role-based dashboards for donors, volunteers, and administrators
 - Admin user management with block/unblock and role assignment
-- Stripe Checkout funding with role-aware funding history
+- Stripe Checkout funding with an authenticated funding history
 - Daily, weekly, and monthly donation-request charts using ApexCharts
 - Six-item pagination on search results, requests, users, and funding records
 - Status filtering, confirmation modals, toast notifications, and custom 404 page
@@ -42,10 +42,11 @@ BloodLink makes blood donation coordination faster and easier. Users can find co
 
 - Search for compatible donors
 - View and respond to pending blood requests
-- Create and manage personal donation requests while active
+- Create requests while active, edit personal requests while pending, and delete them when needed
+- View request status without changing it
 - View the three most recent personal requests on the dashboard
 - Maintain personal profile information
-- Give funds and view personal funding history
+- Give funds and view all funding records
 
 ### Volunteer
 
@@ -73,7 +74,7 @@ BloodLink makes blood donation coordination faster and easier. Users can find co
 | `/search` | Public | Search active donors by blood group and location |
 | `/donation-requests` | Public | Browse pending donation requests |
 | `/donation-requests/[id]` | Private | View request details and confirm a donation |
-| `/funding` | Private | Give funds and view permitted funding history |
+| `/funding` | Private | Give funds and view all funding history |
 | `/dashboard` | Private | Role-aware dashboard home |
 | `/dashboard/profile` | Private | View and update profile information |
 | `/dashboard/my-donation-requests` | Private | Manage personal requests with filtering and pagination |
@@ -175,7 +176,7 @@ npm run lint   # Run ESLint
 - Private API requests require a valid JWT bearer token.
 - Passwords are hashed before database storage.
 - MongoDB, JWT, Stripe, and ImgBB credentials are stored in environment variables.
-- Funding records and dashboard operations are filtered by authenticated role.
+- Funding records are available only to authenticated users; dashboard operations remain role-protected.
 - The API verifies account status before allowing donation-request creation.
 
 ## Responsive Design

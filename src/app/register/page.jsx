@@ -11,7 +11,7 @@ import PasswordInput from "@/components/PasswordInput";
 
 export default function RegisterPage() {
   const { register } = useAuth();
-  const [form, setForm] = useState({ name: "", email: "", mobile: "", bloodGroup: "", district: "", upazila: "", password: "", confirm_password: "" });
+  const [form, setForm] = useState({ name: "", email: "", bloodGroup: "", district: "", upazila: "", password: "", confirm_password: "" });
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState("");
   const [error, setError] = useState("");
@@ -58,8 +58,7 @@ export default function RegisterPage() {
         </div>
         <div className="mt-8 grid gap-4 md:grid-cols-2">
           <input className="field" placeholder="Name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required />
-          <input className="field" type="email" placeholder="Email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required />
-          <input className="field" type="tel" placeholder="Mobile number (01XXXXXXXXX)" value={form.mobile} onChange={(e) => setForm({ ...form, mobile: e.target.value })} required />
+          <input className="field" type="email" placeholder="yourname@email.com" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required />
           <BloodGroupSelect value={form.bloodGroup} onChange={(e) => setForm({ ...form, bloodGroup: e.target.value })} required />
           <DistrictSelect value={form.district} onChange={(e) => setForm({ ...form, district: e.target.value, upazila: "" })} required />
           <UpazilaSelect district={form.district} value={form.upazila} onChange={(e) => setForm({ ...form, upazila: e.target.value })} required />

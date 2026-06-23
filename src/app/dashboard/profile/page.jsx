@@ -82,11 +82,7 @@ export default function ProfilePage() {
           </label>
           <label>
             <span>Email address</span>
-            <input className="field" type="email" value={form.email || ""} disabled />
-          </label>
-          <label>
-            <span>Mobile number</span>
-            <input className="field" type="tel" placeholder="01XXXXXXXXX" value={form.mobile || ""} disabled={!edit} onChange={(event) => setForm({ ...form, mobile: event.target.value })} required />
+            <input className="field" type="email" placeholder="yourname@email.com" value={form.email || ""} disabled />
           </label>
           <label>
             <span>Blood group</span>

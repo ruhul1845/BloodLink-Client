@@ -6,7 +6,7 @@ import Pagination, { usePagination } from "./Pagination";
 import { useToast } from "./Toast";
 import ConfirmModal from "./ConfirmModal";
 import { useState } from "react";
-import { MdCancel, MdCheckCircle, MdDeleteOutline, MdEdit, MdVisibility } from "react-icons/md";
+import { MdDeleteOutline, MdEdit, MdVisibility } from "react-icons/md";
 
 export default function RequestTable({ rows, refresh, mode = "owner", role = "donor" }) {
   const toast = useToast();
@@ -55,6 +55,7 @@ export default function RequestTable({ rows, refresh, mode = "owner", role = "do
           {pageItems.map((row) => {
             const volunteerOnly = role === "volunteer";
             const usesStatusSelect = role === "admin" || volunteerOnly;
+            const canEdit = role === "admin" || (role === "donor" && mode === "owner" && row.status === "pending");
             const canDelete = role === "admin" || (mode === "owner" && !volunteerOnly);
             return (
               <tr key={row._id}>
@@ -67,13 +68,7 @@ export default function RequestTable({ rows, refresh, mode = "owner", role = "do
                 <td>
                   <div className="request-actions">
                     <Link className="request-action action-view" href={`/donation-requests/${row._id}`}><MdVisibility aria-hidden="true" />View</Link>
-                    {!volunteerOnly && <Link className="request-action action-edit" href={`/dashboard/edit-donation-request/${row._id}`}><MdEdit aria-hidden="true" />Edit</Link>}
-                    {!usesStatusSelect && row.status === "inprogress" && (
-                      <>
-                        <button className="request-action action-done" onClick={() => setStatus(row._id, "done")}><MdCheckCircle aria-hidden="true" />Done</button>
-                        <button className="request-action action-cancel" onClick={() => setStatus(row._id, "canceled")}><MdCancel aria-hidden="true" />Cancel</button>
-                      </>
-                    )}
+                    {canEdit && <Link className="request-action action-edit" href={`/dashboard/edit-donation-request/${row._id}`}><MdEdit aria-hidden="true" />Edit</Link>}
                     {usesStatusSelect && (
                       <select className="field request-status-select" aria-label={`Update status for ${row.recipientName}`} value={row.status} onChange={(e) => setStatus(row._id, e.target.value)}>
                         {["pending", "inprogress", "done", "canceled"].map((s) => <option key={s}>{s}</option>)}
