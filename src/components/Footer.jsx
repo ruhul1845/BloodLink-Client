@@ -2,12 +2,13 @@ import Link from "next/link";
 import Logo from "./Logo";
 
 export default function Footer() {
+  const year = new Date().getFullYear();
   return (
-    <footer className="bg-[#101828] py-14 text-white">
+    <footer className="site-footer border-t py-14 text-[#101828]">
       <div className="container-pad grid gap-10 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
         <div>
-          <Logo dark />
-          <p className="mt-5 max-w-sm leading-7 text-[#98A2B3]">Connecting verified donors with urgent blood requests across Bangladesh.</p>
+          <Logo />
+          <p className="mt-5 max-w-sm leading-7">Connecting verified donors with urgent blood requests across Bangladesh.</p>
         </div>
         {[
           ["Platform", [["Search Donors", "/search"], ["Donation Requests", "/donation-requests"], ["Funding", "/funding"]]],
@@ -16,11 +17,14 @@ export default function Footer() {
         ].map(([title, links]) => (
           <div key={title}>
             <h3 className="font-black">{title}</h3>
-            <div className="mt-4 grid gap-3 text-[#98A2B3]">
+            <div className="mt-4 grid gap-3">
               {links.map(([label, href]) => <Link href={href} key={label}>{label}</Link>)}
             </div>
           </div>
         ))}
+      </div>
+      <div className="footer-copyright container-pad mt-12 border-t pt-6 text-center text-sm font-bold">
+        © {year} BloodLink. All rights reserved.
       </div>
     </footer>
   );

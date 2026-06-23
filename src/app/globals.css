@@ -21,22 +21,40 @@ body {
   color: var(--foreground);
 }
 
+.site-footer {
+  border-color: #ead98b;
+  background: linear-gradient(135deg, #fff8d6 0%, #f6e7a6 55%, #fff3bd 100%);
+  color: #000;
+}
+
+.site-footer .brand-name,
+.site-footer a,
+.site-footer p,
+.site-footer h3 {
+  color: inherit;
+}
+
+.footer-copyright {
+  border-color: rgba(0, 0, 0, 0.16);
+}
+
+.home-page {
+  overflow-x: clip;
+}
+
 .hero-section {
   position: relative;
   overflow: hidden;
-  background:
-    radial-gradient(circle at 8% 18%, rgba(224, 43, 34, 0.12), transparent 28%),
-    linear-gradient(135deg, #fff9f8 0%, #fff 58%, #fff3f1 100%);
+  background-color: #f9eeee;
+  background-image: url("/banner.png");
+  background-position: center;
+  background-size: cover;
 }
 
-.hero-section::after {
+.hero-section::before {
   position: absolute;
-  right: -10%;
-  bottom: -40%;
-  width: 620px;
-  height: 620px;
-  border: 1px solid rgba(224, 43, 34, 0.1);
-  border-radius: 999px;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.16), transparent 62%);
   content: "";
 }
 
@@ -69,89 +87,6 @@ body {
   color: #d92d20;
 }
 
-.hero-visual {
-  position: relative;
-  padding: 22px;
-}
-
-.hero-visual::before {
-  position: absolute;
-  inset: 0;
-  border-radius: 36px;
-  background: #e02b22;
-  content: "";
-  rotate: 3deg;
-}
-
-.hero-image-wrap {
-  position: relative;
-  min-height: 540px;
-  overflow: hidden;
-  border: 8px solid rgba(255, 255, 255, 0.9);
-  border-radius: 30px;
-  background: white;
-  box-shadow: 0 30px 70px rgba(102, 16, 20, 0.24);
-}
-
-.hero-image-shade {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, transparent 45%, rgba(44, 4, 8, 0.7) 100%);
-}
-
-.hero-stats {
-  position: absolute;
-  right: 18px;
-  bottom: 18px;
-  left: 18px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
-
-.hero-stat {
-  display: flex;
-  min-width: 0;
-  align-items: center;
-  gap: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.32);
-  border-radius: 16px;
-  background: rgba(18, 11, 18, 0.42);
-  padding: 14px 12px;
-  color: white;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.16);
-}
-
-.hero-stat-icon {
-  display: grid;
-  width: 34px;
-  height: 34px;
-  flex: 0 0 auto;
-  place-items: center;
-  border-radius: 11px;
-  background: rgba(255, 255, 255, 0.18);
-  color: #ffaaa3;
-}
-
-.hero-stat-icon svg {
-  width: 21px;
-  height: 21px;
-}
-
-.hero-stat strong {
-  display: block;
-  font-size: 22px;
-  line-height: 1;
-}
-
-.hero-stat p {
-  margin-top: 5px;
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 11px;
-  line-height: 1.2;
-}
-
 .process-flow {
   display: grid;
   gap: 26px;
@@ -166,6 +101,7 @@ body {
   padding: 34px;
   box-shadow: 0 22px 55px rgba(16, 24, 40, 0.08);
   transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+  will-change: opacity, transform, filter;
 }
 
 .process-card:hover {
@@ -216,6 +152,52 @@ body {
   display: none;
 }
 
+.process-flow-ready .process-card {
+  opacity: 0;
+  filter: blur(10px);
+  transform: translate3d(85vw, 0, 0) scale(0.96);
+}
+
+.process-flow-ready.is-visible .process-card {
+  opacity: 1;
+  filter: none;
+  transform: translate3d(0, 0, 0) scale(1);
+  animation: process-card-reveal 1400ms cubic-bezier(0.16, 1, 0.3, 1) var(--step-delay) backwards;
+}
+
+.process-flow-ready.is-visible .process-icon {
+  animation: process-icon-settle 700ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--step-delay) + 720ms) both;
+}
+
+@keyframes process-card-reveal {
+  0% {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translate3d(85vw, 0, 0) scale(0.96);
+  }
+  65% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(-6px, 0, 0) scale(1.01);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes process-icon-settle {
+  from {
+    box-shadow: 0 5px 12px rgba(224, 43, 34, 0.12);
+    transform: scale(0.72) rotate(8deg);
+  }
+  to {
+    box-shadow: 0 13px 25px rgba(224, 43, 34, 0.24);
+    transform: scale(1) rotate(0);
+  }
+}
+
 .home-contact {
   border-top: 1px solid #eef1f5;
   background: white;
@@ -236,6 +218,18 @@ body {
     border-top: 2px dashed #f0a09a;
   }
 
+  .process-flow-ready .process-connector {
+    opacity: 0;
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+
+  .process-flow-ready.is-visible .process-connector {
+    opacity: 1;
+    transform: scaleX(1);
+    animation: process-connector-draw 500ms ease-out calc(var(--step-delay) + 1180ms) backwards;
+  }
+
   .process-connector::after {
     position: absolute;
     top: -6px;
@@ -247,24 +241,39 @@ body {
     content: "";
     rotate: 45deg;
   }
+
+  @keyframes process-connector-draw {
+    from {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+    to {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .process-flow-ready .process-card,
+  .process-flow-ready.is-visible .process-card,
+  .process-flow-ready.is-visible .process-icon,
+  .process-flow-ready .process-connector,
+  .process-flow-ready.is-visible .process-connector {
+    animation: none;
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
 }
 
 @media (max-width: 620px) {
-  .hero-visual {
-    padding: 10px;
+  .hero-section {
+    background-position: 42% center;
   }
 
-  .hero-image-wrap {
-    min-height: 510px;
-    border-width: 5px;
-  }
-
-  .hero-stats {
-    grid-template-columns: 1fr;
-  }
-
-  .hero-stat {
-    padding: 11px 13px;
+  .hero-section::before {
+    background: rgba(255, 248, 248, 0.76);
   }
 }
 
@@ -575,9 +584,12 @@ tr:last-child td {
 }
 
 .dark .home-page .hero-section {
-  background:
-    radial-gradient(circle at 8% 18%, rgba(224, 43, 34, 0.16), transparent 28%),
-    linear-gradient(135deg, #080d17 0%, #0b1220 58%, #130b12 100%);
+  background-color: #0b1220;
+  background-image: url("/banner.png");
+}
+
+.dark .home-page .hero-section::before {
+  background: rgba(5, 9, 17, 0.74);
 }
 
 .dark .home-page .text-\[\#101828\],
@@ -619,6 +631,16 @@ tr:last-child td {
 
 .dark .home-contact {
   border-color: #273449;
+}
+
+.dark .site-footer {
+  border-color: #273449;
+  background: #0b1220;
+  color: #fff;
+}
+
+.dark .footer-copyright {
+  border-color: rgba(255, 255, 255, 0.16);
 }
 
 .dark .card,
