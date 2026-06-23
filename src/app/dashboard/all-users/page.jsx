@@ -15,7 +15,7 @@ export default function AllUsersPage() {
   const [confirmation, setConfirmation] = useState(null);
   const [busy, setBusy] = useState(false);
   const toast = useToast();
-  const { pageItems, page, setPage, totalPages } = usePagination(users, 10);
+  const { pageItems, page, setPage, totalPages } = usePagination(users, 6);
   const load = useCallback(async () => {
     setUsers(await api(`/api/users${status ? `?status=${status}` : ""}`));
   }, [status]);

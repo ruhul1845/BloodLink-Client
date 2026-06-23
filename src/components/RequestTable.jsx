@@ -12,7 +12,7 @@ export default function RequestTable({ rows, refresh, mode = "owner", role = "do
   const toast = useToast();
   const [pendingDelete, setPendingDelete] = useState(null);
   const [deleting, setDeleting] = useState(false);
-  const { pageItems, page, setPage, totalPages } = usePagination(rows, 10);
+  const { pageItems, page, setPage, totalPages } = usePagination(rows, 6);
   async function setStatus(id, status) {
     try {
       await api(`/api/requests/${id}`, { method: "PATCH", body: JSON.stringify({ status }) });

@@ -11,7 +11,7 @@ export default function DonationRequestsPage() {
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const { pageItems, page, setPage, totalPages } = usePagination(rows, 9);
+  const { pageItems, page, setPage, totalPages } = usePagination(rows, 6);
 
   useEffect(() => {
     api("/api/requests")

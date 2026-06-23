@@ -12,7 +12,7 @@ export default function SearchPage() {
   const [form, setForm] = useState({ bloodGroup: "", district: "", upazila: "" });
   const [donors, setDonors] = useState([]);
   const [searched, setSearched] = useState(false);
-  const { pageItems, page, setPage, totalPages } = usePagination(donors, 9);
+  const { pageItems, page, setPage, totalPages } = usePagination(donors, 6);
   async function submit(e) {
     e.preventDefault();
     const qs = new URLSearchParams(form).toString();

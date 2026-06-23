@@ -60,7 +60,7 @@ export default function FundingPage() {
   const router = useRouter();
   const [funds, setFunds] = useState([]);
   const [show, setShow] = useState(false);
-  const { pageItems, page, setPage, totalPages } = usePagination(funds, 10);
+  const { pageItems, page, setPage, totalPages } = usePagination(funds, 6);
   const canSeeAllFunds = user?.role === "admin" || user?.role === "volunteer";
   const load = useCallback(async () => {
     if (!user) return;
