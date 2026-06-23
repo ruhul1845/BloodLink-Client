@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { MdBloodtype } from "react-icons/md";
+import { MdBloodtype, MdEmail, MdPhone } from "react-icons/md";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ContactForm from "@/components/ContactForm";
 import HowItWorks from "@/components/HowItWorks";
+import FeaturedSection from "@/components/FeaturedSection";
 
 export default function Home() {
   return (
@@ -19,21 +20,26 @@ export default function Home() {
               </h1>
               <p className="mt-6 max-w-xl text-lg leading-8 text-[#667085]">BloodLink brings donors and patients together with faster search, trusted requests, and simple coordination when every minute matters.</p>
               <div className="mt-9 flex flex-wrap gap-4">
-                <Link href="/register" className="btn-primary">Become a donor</Link>
-                <Link href="/search" className="btn-ghost">Find blood now</Link>
+                <Link href="/register" className="btn-primary">Join as a donor</Link>
+                <Link href="/search" className="btn-ghost">Search Donors</Link>
               </div>
             </div>
           </div>
         </section>
 
         <HowItWorks />
+        <FeaturedSection />
 
         <section id="contact" className="home-contact py-20">
           <div className="container-pad grid gap-10 lg:grid-cols-2">
             <div>
               <span className="section-eyebrow">We&apos;re here to help</span>
               <h2 className="mt-3 text-4xl font-black">Contact us</h2>
-              <p className="mt-4 max-w-lg text-lg leading-8 text-[#667085]">For emergency coordination or support, call +880 1711-000000 or send us a message.</p>
+              <p className="mt-4 max-w-lg text-lg leading-8 text-[#667085]">For emergency coordination, donation support, or questions, contact the BloodLink team.</p>
+              <div className="contact-details mt-6">
+                <a href="tel:01834340813" aria-label="Call 01834340813"><span className="contact-icon"><MdPhone aria-hidden="true" /></span><strong>01834340813</strong></a>
+                <a href="mailto:bloodlink@gmail.com" aria-label="Email bloodlink@gmail.com"><span className="contact-icon"><MdEmail aria-hidden="true" /></span><strong>bloodlink@gmail.com</strong></a>
+              </div>
             </div>
             <ContactForm />
           </div>

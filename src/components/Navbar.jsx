@@ -18,7 +18,6 @@ export default function Navbar() {
         <Link href="/"><Logo /></Link>
         <div className="hidden items-center gap-8 font-bold text-[#667085] md:flex">
           <Link href="/donation-requests" className="hover:text-[#E02B22]">Donation Requests</Link>
-          <Link href="/search" className="hover:text-[#E02B22]">Search Donors</Link>
           {user && <Link href="/funding" className="hover:text-[#E02B22]">Funding</Link>}
         </div>
         <div className="flex items-center gap-2 sm:gap-3">
@@ -38,7 +37,6 @@ export default function Navbar() {
         ) : (
           <div className="hidden items-center gap-3 md:flex">
             <Link href="/login" className="font-bold text-[#667085] hover:text-[#E02B22]">Login</Link>
-            <Link href="/register" className="btn-primary">Join as Donor</Link>
           </div>
         )}
           <button type="button" className="grid h-11 w-11 place-items-center rounded-xl text-[#344054] md:hidden" onClick={() => setMobileOpen((current) => !current)} aria-label="Toggle navigation" aria-expanded={mobileOpen}>
@@ -50,7 +48,6 @@ export default function Navbar() {
         <div className="border-t border-[#EEF1F5] bg-white md:hidden">
           <div className="container-pad grid gap-1 py-4 font-bold text-[#475467]">
             <Link href="/donation-requests" className="rounded-lg px-3 py-3" onClick={() => setMobileOpen(false)}>Donation Requests</Link>
-            <Link href="/search" className="rounded-lg px-3 py-3" onClick={() => setMobileOpen(false)}>Search Donors</Link>
             {user ? (
               <>
                 <Link href="/funding" className="rounded-lg px-3 py-3" onClick={() => setMobileOpen(false)}>Funding</Link>
@@ -60,7 +57,6 @@ export default function Navbar() {
             ) : (
               <>
                 <Link href="/login" className="rounded-lg px-3 py-3" onClick={() => setMobileOpen(false)}>Login</Link>
-                <Link href="/register" className="rounded-lg px-3 py-3 text-[#D92D20]" onClick={() => setMobileOpen(false)}>Join as Donor</Link>
               </>
             )}
           </div>
