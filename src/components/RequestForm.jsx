@@ -24,6 +24,10 @@ export default function RequestForm({ initial = null, editId = null }) {
   async function submit(e) {
     e.preventDefault();
     setError("");
+    if (!editId && user?.status !== "active") {
+      setError("Only active users can create donation requests.");
+      return;
+    }
     try {
       if (editId) await api(`/api/requests/${editId}`, { method: "PATCH", body: JSON.stringify(form) });
       else await api("/api/requests", { method: "POST", body: JSON.stringify(form) });

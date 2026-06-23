@@ -21,7 +21,7 @@ export default function DashboardLayout({ children }) {
     ["/dashboard", "Dashboard", true],
     ["/dashboard/profile", "Profile", true],
     ["/dashboard/my-donation-requests", "My Requests", ["donor", "admin", "volunteer"].includes(user.role)],
-    ["/dashboard/create-donation-request", "Create Request", ["donor", "admin", "volunteer"].includes(user.role)],
+    ["/dashboard/create-donation-request", "Create Request", user.status === "active" && ["donor", "admin", "volunteer"].includes(user.role)],
     ["/dashboard/all-users", "All Users", user.role === "admin"],
     ["/dashboard/all-blood-donation-request", "All Blood Requests", user.role === "admin" || user.role === "volunteer"],
     ["/funding", "Funding", true],
