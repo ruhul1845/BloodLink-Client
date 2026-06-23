@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import { api } from "@/lib/api";
 import RequestTable from "@/components/RequestTable";
-import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import ApexRequestChart from "@/components/ApexRequestChart";
 import { MdAttachMoney, MdBloodtype, MdPeopleAlt } from "react-icons/md";
 
 export default function DashboardHome() {
@@ -52,15 +52,7 @@ export default function DashboardHome() {
                 </div>
               </div>
               <div className="card mt-5 h-80 p-5">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={stats?.requestTrend || []} margin={{ top: 10, right: 10, left: -18, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E4E7EC" />
-                    <XAxis dataKey="label" tick={{ fill: "#667085", fontSize: 12 }} tickLine={false} axisLine={false} />
-                    <YAxis allowDecimals={false} tick={{ fill: "#667085", fontSize: 12 }} tickLine={false} axisLine={false} />
-                    <Tooltip cursor={{ fill: "rgba(224, 43, 34, 0.06)" }} formatter={(value) => [value, "Requests"]} />
-                    <Bar dataKey="requests" fill="#E02B22" radius={[8, 8, 0, 0]} maxBarSize={44} />
-                  </BarChart>
-                </ResponsiveContainer>
+                <ApexRequestChart data={stats?.requestTrend || []} />
               </div>
             </div>
             <div>

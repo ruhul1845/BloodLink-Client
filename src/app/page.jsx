@@ -1,94 +1,90 @@
+import Image from "next/image";
 import Link from "next/link";
+import {
+  MdAttachMoney,
+  MdBloodtype,
+  MdPeopleAlt,
+  MdPersonAddAlt1,
+  MdSearch,
+  MdVolunteerActivism,
+} from "react-icons/md";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ContactForm from "@/components/ContactForm";
 
 export default function Home() {
   const steps = [
-    ["1", "Register as donor", "Create a verified profile with blood group, district, upazila and avatar."],
-    ["2", "Search or request", "Find matching donors or publish an urgent blood donation request."],
-    ["3", "Confirm donation", "Logged-in donors respond and the request moves to in progress."],
+    [MdPersonAddAlt1, "Create your profile", "Register your blood group and location so the right people can find you."],
+    [MdSearch, "Find the right match", "Search verified donors nearby or publish a request when blood is urgently needed."],
+    [MdVolunteerActivism, "Connect & save a life", "Respond, coordinate the donation, and keep every request moving forward."],
   ];
-  const features = [
-    ["Verified donor profiles", "Blood group, location and active/blocked status management."],
-    ["Role-based dashboards", "Admin, donor and volunteer screens with precise permissions."],
-    ["Secure funding workflow", "Private Stripe funding flow with organization fund records."],
-    ["Request visibility", "Pending public requests and protected details for logged-in donors."],
+
+  const stats = [
+    [MdPeopleAlt, "1", "Total donors"],
+    [MdAttachMoney, "$102,010", "Total funding"],
+    [MdBloodtype, "4", "Blood requests"],
   ];
+
   return (
     <>
       <Navbar />
-      <main>
-        <section className="bg-[#FFF6F4]">
-          <div className="container-pad grid min-h-[650px] items-center gap-10 py-16 lg:grid-cols-2">
-            <div>
-              <h1 className="max-w-2xl text-5xl font-black leading-[1.05] text-[#101828] md:text-7xl">Donate blood. Find donors. Save lives faster</h1>
-              <p className="mt-6 max-w-xl text-lg leading-8 text-[#667085]">BloodLink connects donors, patients, volunteers, and admins through secure request management, donor search, and funding support.</p>
-              <div className="mt-8 flex flex-wrap gap-4">
-                <Link href="/register" className="btn-primary">Join as a donor</Link>
-                <Link href="/search" className="btn-ghost">Search Donors</Link>
+      <main className="home-page">
+        <section className="hero-section">
+          <div className="container-pad grid min-h-[680px] items-center gap-12 py-16 lg:grid-cols-[1.02fr_.98fr]">
+            <div className="relative z-10">
+              <span className="hero-kicker"><MdBloodtype aria-hidden="true" /> Bangladesh&apos;s blood donation network</span>
+              <h1 className="mt-6 max-w-2xl text-5xl font-black leading-[1.04] text-[#101828] md:text-7xl">
+                Give blood.<br /><span>Give someone time.</span>
+              </h1>
+              <p className="mt-6 max-w-xl text-lg leading-8 text-[#667085]">BloodLink brings donors and patients together with faster search, trusted requests, and simple coordination when every minute matters.</p>
+              <div className="mt-9 flex flex-wrap gap-4">
+                <Link href="/register" className="btn-primary">Become a donor</Link>
+                <Link href="/search" className="btn-ghost">Find blood now</Link>
               </div>
             </div>
-            <div className="relative">
-              <div className="absolute right-0 top-0 h-72 w-72 rounded-full bg-[#FFE0DF]" />
-              <div className="absolute bottom-2 right-[-20px] h-56 w-56 rounded-full bg-[#FFE083]" />
-              <div className="relative mx-auto max-w-lg rounded-[28px] bg-white p-8 shadow-2xl">
-                <p className="font-black text-[#667085]">Live urgent needs</p>
-                <h2 className="mt-3 text-3xl font-black">Find matching blood within minutes</h2>
-                {[
-                  ["Rafiq Ahmed", "Dhaka, Mirpur", "A+"],
-                  ["Sanjida Akter", "Sylhet, Sadar", "AB-"],
-                ].map(([name, location, group]) => (
-                  <div className="mt-5 rounded-2xl border border-[#E4E7EC] p-5" key={name}>
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-xl font-black">Recipient: {name}</h3>
-                      <span className="status status-pending">pending</span>
+
+            <div className="hero-visual">
+              <div className="hero-image-wrap">
+                <Image src="/banner.jpg" alt="Blood donation heartbeat illustration" fill priority sizes="(max-width: 1024px) 100vw, 48vw" className="object-cover" />
+                <div className="hero-image-shade" />
+                <div className="hero-stats" aria-label="BloodLink coverage statistics">
+                  {stats.map(([Icon, value, label]) => (
+                    <div className="hero-stat" key={label}>
+                      <span className="hero-stat-icon"><Icon aria-hidden="true" /></span>
+                      <div><strong>{value}</strong><p>{label}</p></div>
                     </div>
-                    <div className="mt-4 flex items-center gap-5">
-                      <span className="grid h-16 w-16 place-items-center rounded-full bg-[#FFECEC] text-2xl font-black text-[#E02B22]">{group}</span>
-                      <div className="grid gap-1 font-bold text-[#667085]">
-                        <span>{location}</span>
-                        <span className="text-[#101828]">Donation date: 24 June 2026</span>
-                        <span className="text-[#101828]">Donation time: 10:30 AM</span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-        <section className="container-pad py-20">
-          <h2 className="text-4xl font-black">How BloodLink Works</h2>
-          <div className="mt-9 grid gap-6 md:grid-cols-3">
-            {steps.map(([num, title, text]) => (
-              <div key={title} className="card p-8">
-                <span className="grid h-12 w-12 place-items-center rounded-full bg-[#FFECEC] font-black text-[#E02B22]">{num}</span>
-                <h3 className="mt-7 text-2xl font-black">{title}</h3>
-                <p className="mt-4 leading-7 text-[#667085]">{text}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-        <section className="container-pad pb-20">
-          <h2 className="text-4xl font-black">Featured Platform Sections</h2>
-          <div className="mt-9 grid gap-6 md:grid-cols-2">
-            {features.map(([title, text], index) => (
-              <div key={title} className="card flex gap-5 p-8">
-                <span className={`mt-1 h-12 w-12 rounded-full ${["bg-[#FFECEC]", "bg-[#EAF4FF]", "bg-[#E9FBF2]", "bg-[#F1ECFF]"][index]}`} />
-                <div>
-                  <h3 className="text-xl font-black">{title}</h3>
-                  <p className="mt-2 leading-7 text-[#667085]">{text}</p>
+                  ))}
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="container-pad py-24">
+          <div className="mx-auto max-w-2xl text-center">
+            <span className="section-eyebrow">Simple. Human. Fast.</span>
+            <h2 className="mt-3 text-4xl font-black md:text-5xl">How BloodLink works</h2>
+            <p className="mt-4 text-lg leading-8 text-[#667085]">From signing up to saving a life, the path stays clear.</p>
+          </div>
+          <div className="process-flow mt-14">
+            {steps.map(([Icon, title, text], index) => (
+              <article key={title} className="process-card">
+                <span className="process-number">0{index + 1}</span>
+                <span className="process-icon"><Icon aria-hidden="true" /></span>
+                <h3>{title}</h3>
+                <p>{text}</p>
+                {index < steps.length - 1 && <span className="process-connector" aria-hidden="true"><i /></span>}
+              </article>
             ))}
           </div>
         </section>
-        <section id="contact" className="bg-white py-20">
-          <div className="container-pad grid gap-8 lg:grid-cols-2">
+
+        <section id="contact" className="home-contact py-20">
+          <div className="container-pad grid gap-10 lg:grid-cols-2">
             <div>
-              <h2 className="text-4xl font-black">Contact Us</h2>
-              <p className="mt-4 text-lg leading-8 text-[#667085]">For emergency coordination or support, call +880 1711-000000 or send a message.</p>
+              <span className="section-eyebrow">We&apos;re here to help</span>
+              <h2 className="mt-3 text-4xl font-black">Contact us</h2>
+              <p className="mt-4 max-w-lg text-lg leading-8 text-[#667085]">For emergency coordination or support, call +880 1711-000000 or send us a message.</p>
             </div>
             <ContactForm />
           </div>

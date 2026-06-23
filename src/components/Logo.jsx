@@ -4,7 +4,7 @@ export default function Logo({ dark = false }) {
       <span className="grid h-10 w-10 place-items-center overflow-hidden rounded-full bg-white">
         <img src="/blood.webp" alt="" className="h-full w-full scale-[1.7] object-cover" />
       </span>
-      <span className={`text-2xl font-black ${dark ? "text-white" : "text-[#101828]"}`}>BloodLink</span>
+      <span className={`text-2xl font-black ${dark ? "text-white" : "brand-name"}`}>BloodLink</span>
     </div>
   );
 }

@@ -26,6 +26,13 @@ export default function DashboardLayout({ children }) {
     ["/dashboard/all-blood-donation-request", "All Blood Requests", user.role === "admin" || user.role === "volunteer"],
     ["/funding", "Funding", true],
   ].filter(([, , show]) => show);
+  const accountLabel = user.status === "blocked"
+    ? "Blocked"
+    : user.role === "admin"
+      ? "Admin"
+      : user.role === "volunteer"
+        ? "Volunteer"
+        : "Donor";
   return (
     <div className="min-h-screen bg-[#F7F8FB] lg:grid lg:grid-cols-[280px_1fr]">
       <aside className="dashboard-sidebar flex flex-col border-r border-[#E8E4DA] bg-[#FFFDF7] p-6 text-[#101828] lg:sticky lg:top-0 lg:h-screen lg:min-h-screen">
@@ -50,7 +57,12 @@ export default function DashboardLayout({ children }) {
           </div>
         </div>
       </aside>
-      <main className="p-5 md:p-10">{children}</main>
+      <main className="p-5 md:p-10">
+        <div className="dashboard-topbar" aria-label="Account type and status">
+          <span className={`account-tag ${user.status === "blocked" ? "account-tag-blocked" : `account-tag-${user.role}`}`}>{accountLabel}</span>
+        </div>
+        {children}
+      </main>
     </div>
   );
 }
