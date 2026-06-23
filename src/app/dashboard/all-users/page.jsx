@@ -6,6 +6,7 @@ import { initials } from "@/lib/data";
 import ConfirmModal from "@/components/ConfirmModal";
 import Pagination, { usePagination } from "@/components/Pagination";
 import { useToast } from "@/components/Toast";
+import { MdAdminPanelSettings, MdBlock, MdLockOpen } from "react-icons/md";
 
 export default function AllUsersPage() {
   const [users, setUsers] = useState([]);
@@ -49,7 +50,7 @@ export default function AllUsersPage() {
     <section>
       <div className="flex flex-wrap items-center justify-between gap-4">
         <h1 className="text-4xl font-black">All Users</h1>
-        <select className="field max-w-52" value={status} onChange={(e) => setStatus(e.target.value)}>
+        <select className="field user-filter" value={status} onChange={(e) => setStatus(e.target.value)}>
           <option value="">All status</option><option>active</option><option>blocked</option>
         </select>
       </div>
@@ -59,23 +60,26 @@ export default function AllUsersPage() {
           <tbody>
             {pageItems.map((u) => (
               <tr key={u._id}>
-                <td><span className="grid h-11 w-11 place-items-center overflow-hidden rounded-full bg-[#FFECEC] font-black text-[#E02B22]">{u.avatar ? <img src={u.avatar} alt={u.name} className="h-full w-full object-cover" /> : initials(u.name)}</span></td>
-                <td>{u.email}</td><td className="font-black">{u.name}</td><td>{u.role}</td><td><span className={`status status-${u.status}`}>{u.status}</span></td>
-                <td><div className="flex flex-wrap gap-2">
-                  <button className="font-black text-[#D92D20]" onClick={() => updateUser(u._id, { status: u.status === "active" ? "blocked" : "active" }, "status", `${u.name} has been ${u.status === "active" ? "blocked" : "unblocked"}.`)}>{u.status === "active" ? "Block" : "Unblock"}</button>
+                <td><span className="user-table-avatar">{u.avatar ? <img src={u.avatar} alt={u.name} className="h-full w-full object-cover" /> : initials(u.name)}</span></td>
+                <td>{u.email}</td><td className="font-black">{u.name}</td><td><span className={`user-role-badge user-role-${u.role}`}>{u.role}</span></td><td><span className={`user-status-pill user-status-${u.status}`}>{u.status}</span></td>
+                <td><div className="user-actions">
+                  <button className={`user-action-button ${u.status === "active" ? "user-action-block" : "user-action-unblock"}`} onClick={() => updateUser(u._id, { status: u.status === "active" ? "blocked" : "active" }, "status", `${u.name} has been ${u.status === "active" ? "blocked" : "unblocked"}.`)}>
+                    {u.status === "active" ? <MdBlock aria-hidden="true" /> : <MdLockOpen aria-hidden="true" />}
+                    {u.status === "active" ? "Block user" : "Unblock user"}
+                  </button>
                   {u.role !== "admin" && (
                     <>
                       <select
-                        className="field max-w-44 py-2"
+                        className="field user-role-select"
                         aria-label={`Choose role update for ${u.name}`}
                         value={roleSelections[u._id] || ""}
                         onChange={(event) => setRoleSelections((current) => ({ ...current, [u._id]: event.target.value }))}
                       >
-                        <option value="">Role action</option>
+                        <option value="">Change role</option>
                         {u.role === "volunteer" ? <option value="donor">Remove Volunteer</option> : <option value="volunteer">Make Volunteer</option>}
                         <option value="admin">Make Admin</option>
                       </select>
-                      <button className="btn-update py-2" disabled={!roleSelections[u._id]} onClick={() => requestRoleUpdate(u)}>Update</button>
+                      <button className="user-action-button user-action-update" disabled={!roleSelections[u._id]} onClick={() => requestRoleUpdate(u)}><MdAdminPanelSettings aria-hidden="true" />Update role</button>
                     </>
                   )}
                 </div></td>

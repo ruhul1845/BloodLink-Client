@@ -1154,6 +1154,94 @@ tr:last-child td {
   gap: 12px;
 }
 
+.request-actions {
+  display: flex;
+  min-width: 230px;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+}
+
+.request-action {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid #dfe4ec;
+  border-radius: 9px;
+  background: #fff;
+  padding: 7px 10px;
+  color: #475467;
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.request-action svg {
+  width: 16px;
+  height: 16px;
+}
+
+.request-action:hover {
+  border-color: currentColor;
+  background: #f8fafc;
+  transform: translateY(-1px);
+}
+
+.action-view {
+  color: #1d70d4;
+}
+
+.action-edit {
+  color: #475467;
+}
+
+.action-done {
+  color: #087a4b;
+}
+
+.action-cancel,
+.action-delete {
+  color: #c5261e;
+}
+
+.action-delete {
+  border-color: #f3cecb;
+}
+
+.request-status-select {
+  width: auto;
+  min-width: 126px;
+  border-radius: 9px;
+  padding: 7px 30px 7px 10px;
+  color: #344054;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+.dark .request-action {
+  border-color: #3b4a61;
+  background: #1b273a;
+}
+
+.dark .request-action:hover {
+  background: #243249;
+}
+
+.dark .action-edit {
+  color: #cbd5e1;
+}
+
+.dark .action-delete {
+  border-color: #61343a;
+}
+
+.dark .request-status-select {
+  color: #f8fafc;
+}
+
 .request-card-details > div {
   display: flex;
   align-items: baseline;
@@ -1259,6 +1347,163 @@ tr:last-child td {
 
 .user-state-blocked {
   color: #d92d20;
+}
+
+.user-filter {
+  width: 100%;
+  max-width: 208px;
+  border-radius: 12px;
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+.user-table-avatar {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  overflow: hidden;
+  border: 3px solid white;
+  border-radius: 999px;
+  background: #ffecec;
+  color: #e02b22;
+  box-shadow: 0 7px 18px rgba(16, 24, 40, 0.14);
+  font-weight: 900;
+}
+
+.user-role-badge,
+.user-status-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: capitalize;
+}
+
+.user-role-donor {
+  color: #1d70d4;
+}
+
+.user-role-volunteer {
+  color: #087a4b;
+}
+
+.user-role-admin {
+  color: #7f3fbf;
+}
+
+.user-status-active {
+  color: #087a4b;
+}
+
+.user-status-blocked {
+  color: #c5261e;
+}
+
+.user-actions {
+  display: flex;
+  min-width: 390px;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.user-action-button {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid #dfe4ec;
+  border-radius: 10px;
+  background: white;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.user-action-button svg {
+  width: 17px;
+  height: 17px;
+}
+
+.user-action-button:hover:not(:disabled) {
+  border-color: currentColor;
+  transform: translateY(-1px);
+}
+
+.user-action-block {
+  border-color: #f3cecb;
+  color: #c5261e;
+}
+
+.user-action-unblock {
+  border-color: #bde9d3;
+  color: #087a4b;
+}
+
+.user-role-select {
+  width: 150px;
+  min-height: 38px;
+  border-radius: 10px;
+  padding-block: 7px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.user-action-update {
+  border-color: #bde9d3;
+  background: #0f9f63;
+  color: white;
+}
+
+.user-action-update:hover:not(:disabled) {
+  background: #087a4b;
+}
+
+.dark .user-table-avatar {
+  border-color: #151f30;
+}
+
+.dark .user-role-donor {
+  color: #93c5fd;
+}
+
+.dark .user-role-volunteer,
+.dark .user-status-active {
+  color: #86efac;
+}
+
+.dark .user-role-admin {
+  color: #c4b5fd;
+}
+
+.dark .user-status-blocked {
+  color: #fca5a5;
+}
+
+.dark .user-action-button {
+  border-color: #3b4a61;
+  background: #1b273a;
+}
+
+.dark .user-action-block {
+  border-color: #61343a;
+  color: #fca5a5;
+}
+
+.dark .user-action-unblock {
+  border-color: #285a47;
+  color: #86efac;
+}
+
+.dark .user-action-update {
+  border-color: #0f9f63;
+  background: #0f9f63;
+  color: white;
 }
 
 .dark .chart-range-toggle {
